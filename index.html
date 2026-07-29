@@ -1925,6 +1925,49 @@ render();
 </script>
 <script>
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});}
+
+/* ==================== 安装到桌面引导（iOS / 微信 / Android） ==================== */
+(function(){
+  try{
+    var ua=navigator.userAgent||'';
+    var isStandalone=(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||window.navigator.standalone===true;
+    if(isStandalone) return;                            /* 已经装到桌面，不提示 */
+    if(localStorage.getItem('kidsedu_a2hs_dismiss')) return;  /* 用户关过，不再骚扰 */
+    var isIOS=/iPhone|iPad|iPod/i.test(ua)||(/Macintosh/i.test(ua)&&'ontouchend' in document);
+    var isWeChat=/MicroMessenger/i.test(ua);
+    var isQQ=/ QQ\//i.test(ua)||/QQBrowser/i.test(ua);
+    var isIOSSafari=isIOS&&!/CriOS|FxiOS|EdgiOS|MicroMessenger|QQ/i.test(ua);
+    var isIOSOtherBrowser=isIOS&&/CriOS|FxiOS|EdgiOS/i.test(ua);
+    var msg='';
+    if(isWeChat||isQQ){
+      msg='<b>想把「学习乐园」装到桌面？</b><br>请点右上角 <b>···</b> 菜单，选择<b>「在浏览器打开」</b>'+(isIOS?'（用 Safari 打开）':'')+'，再按提示添加到桌面哦。';
+    }else if(isIOSSafari){
+      msg='<b>把「学习乐园」装到 iPhone/iPad 桌面：</b><br>1️⃣ 点击底部中间的 <b>分享按钮</b> <span style="display:inline-block;border:1.5px solid #59a8dd;border-radius:5px;padding:0 5px;font-weight:700">⎋</span>（方框加向上箭头）<br>2️⃣ 在菜单里<b>向下滑动</b>，找到<b>「添加到主屏幕」</b><br>3️⃣ 点右上角「添加」就完成啦 🎉';
+    }else if(isIOSOtherBrowser){
+      msg='<b>提示：</b>建议改用 iPhone 自带的 <b>Safari 浏览器</b>打开本页，点底部「分享」→「添加到主屏幕」，即可装到桌面。';
+    }
+    if(!msg) return;
+    var bar=document.createElement('div');
+    bar.id='a2hsTip';
+    bar.style.cssText='position:fixed;left:10px;right:10px;bottom:86px;z-index:9999;background:#fffefb;border:2px solid #9fd6f7;border-radius:16px;box-shadow:0 8px 24px rgba(90,150,200,.25);padding:12px 40px 12px 14px;font-size:14px;line-height:1.7;color:#3a5a74;animation:a2hsIn .4s ease';
+    bar.innerHTML=msg+'<div onclick="document.getElementById(\'a2hsTip\').remove();localStorage.setItem(\'kidsedu_a2hs_dismiss\',\'1\')" style="position:absolute;top:6px;right:8px;width:28px;height:28px;line-height:28px;text-align:center;border-radius:50%;background:#eef6fc;font-weight:700;cursor:pointer">✕</div>';
+    var st=document.createElement('style');
+    st.textContent='@keyframes a2hsIn{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}';
+    document.head.appendChild(st);
+    document.body.appendChild(bar);
+    if(isIOSSafari){
+      /* 底部小箭头指向 Safari 分享按钮位置 */
+      var arrow=document.createElement('div');
+      arrow.id='a2hsArrow';
+      arrow.textContent='⬇️';
+      arrow.style.cssText='position:fixed;left:50%;transform:translateX(-50%);bottom:52px;z-index:9999;font-size:26px;animation:a2hsBounce 1s infinite';
+      st.textContent+='@keyframes a2hsBounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}';
+      document.body.appendChild(arrow);
+      var oldRm=bar.querySelector('div[onclick]');
+      oldRm.setAttribute('onclick',oldRm.getAttribute('onclick')+";var a=document.getElementById('a2hsArrow');if(a)a.remove();");
+    }
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
