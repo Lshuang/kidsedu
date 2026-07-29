@@ -433,8 +433,81 @@ var DEF_SHOP=[
  {id:13,icon:'👶', name:'看《超级宝贝JoJo》儿歌动画2集',  cost:15, cat:'优选观影'},
  {id:14,icon:'🏮', name:'看《中国唱诗班》古诗动画1集',    cost:15, cat:'优选观影'},
  {id:15,icon:'🐞', name:'看《微观小世界》昆虫动画3集',    cost:20, cat:'优选观影'},
- {id:16,icon:'🗺️', name:'看《航拍中国》纪录片20分钟',     cost:25, cat:'优选观影'}
+ {id:16,icon:'🗺️', name:'看《航拍中国》纪录片20分钟',     cost:25, cat:'优选观影'},
+ /* v4 扩容：生活特权 */
+ {id:17,icon:'🛁', name:'泡泡浴一次',              cost:25,  cat:'生活特权'},
+ {id:18,icon:'⏰', name:'周末赖床20分钟',          cost:30,  cat:'生活特权'},
+ {id:19,icon:'🕹️', name:'自由安排30分钟',          cost:40,  cat:'生活特权'},
+ {id:20,icon:'👑', name:'当一天小家长',            cost:60,  cat:'生活特权'},
+ {id:21,icon:'🗺️', name:'决定周末去哪儿玩',        cost:80,  cat:'生活特权'},
+ {id:22,icon:'🧦', name:'明天衣服自己搭配',        cost:20,  cat:'生活特权'},
+ {id:23,icon:'🚿', name:'免收拾一次玩具卡',        cost:30,  cat:'生活特权'},
+ /* 家庭陪伴 */
+ {id:24,icon:'🌙', name:'睡前悄悄话10分钟',        cost:20,  cat:'家庭陪伴'},
+ {id:25,icon:'⚽', name:'爸妈陪打球30分钟',        cost:50,  cat:'家庭陪伴'},
+ {id:26,icon:'🍪', name:'一起烘焙小饼干',          cost:60,  cat:'家庭陪伴'},
+ {id:27,icon:'📚', name:'亲子共读新绘本30分钟',    cost:40,  cat:'家庭陪伴'},
+ {id:28,icon:'♟️', name:'和爸爸下棋一局',          cost:30,  cat:'家庭陪伴'},
+ {id:29,icon:'🧺', name:'全家公园野餐一次',        cost:120, cat:'家庭陪伴'},
+ {id:30,icon:'🍳', name:'和妈妈一起做一道菜',      cost:50,  cat:'家庭陪伴'},
+ /* 户外体验 */
+ {id:31,icon:'🎠', name:'去游乐场玩一次',          cost:120, cat:'户外体验'},
+ {id:32,icon:'🪁', name:'放风筝半天',              cost:60,  cat:'户外体验'},
+ {id:33,icon:'🌌', name:'夜晚观星散步',            cost:40,  cat:'户外体验'},
+ {id:34,icon:'🏛️', name:'去图书馆挑书借书',        cost:50,  cat:'户外体验'},
+ {id:35,icon:'🔍', name:'户外寻宝小游戏',          cost:40,  cat:'户外体验'},
+ {id:36,icon:'🏊', name:'去游泳一次',              cost:100, cat:'户外体验'},
+ {id:37,icon:'⛰️', name:'爬山郊游半天',            cost:100, cat:'户外体验'},
+ /* 优选观影补充 */
+ {id:38,icon:'🏺', name:'看《如果国宝会说话》1集',  cost:15,  cat:'优选观影'},
+ {id:39,icon:'🌊', name:'看《蓝色星球》纪录片20分钟',cost:25, cat:'优选观影'},
+ {id:40,icon:'🐙', name:'看《海底小纵队》2集',      cost:15,  cat:'优选观影'},
+ {id:41,icon:'🐘', name:'看《动物世界》片段15分钟', cost:20,  cat:'优选观影'},
+ /* 娱乐时光 */
+ {id:42,icon:'📺', name:'看电视30分钟券',          cost:35,  cat:'娱乐时光'},
+ {id:43,icon:'🎵', name:'儿歌律动跳舞15分钟',      cost:15,  cat:'娱乐时光'},
+ {id:44,icon:'🧠', name:'平板益智游戏15分钟',      cost:25,  cat:'娱乐时光'},
+ {id:45,icon:'🍿', name:'周末亲子电影夜',          cost:100, cat:'娱乐时光'},
+ {id:46,icon:'🎧', name:'听故事音频20分钟',        cost:15,  cat:'娱乐时光'},
+ {id:47,icon:'📷', name:'拍照/录小视频10分钟',     cost:20,  cat:'娱乐时光'},
+ {id:48,icon:'🎲', name:'桌游一局',                cost:30,  cat:'娱乐时光'},
+ {id:49,icon:'🎤', name:'客厅K歌两首',             cost:20,  cat:'娱乐时光'},
+ {id:50,icon:'🫧', name:'吹泡泡10分钟',            cost:15,  cat:'娱乐时光'},
+ /* 美食甜点 */
+ {id:51,icon:'🍦', name:'冰淇淋一个',              cost:40,  cat:'美食甜点'},
+ {id:52,icon:'🍉', name:'水果拼盘自己选',          cost:20,  cat:'美食甜点'},
+ {id:53,icon:'🍰', name:'小蛋糕一块',              cost:40,  cat:'美食甜点'},
+ {id:54,icon:'🧃', name:'果汁/酸奶一杯',           cost:30,  cat:'美食甜点'},
+ {id:55,icon:'🍬', name:'糖果两颗',                cost:15,  cat:'美食甜点'},
+ {id:56,icon:'🍿', name:'爆米花一份',              cost:30,  cat:'美食甜点'},
+ {id:57,icon:'🥗', name:'和爸妈做水果沙拉',        cost:25,  cat:'美食甜点'},
+ {id:58,icon:'🍕', name:'披萨晚餐一次',            cost:80,  cat:'美食甜点'},
+ {id:59,icon:'🍭', name:'棒棒糖一根',              cost:15,  cat:'美食甜点'},
+ {id:60,icon:'🥞', name:'自选一次早餐',            cost:30,  cat:'美食甜点'},
+ /* 学习装备 */
+ {id:61,icon:'✨', name:'闪亮贴纸一张',            cost:10,  cat:'学习装备'},
+ {id:62,icon:'🧽', name:'卡通橡皮一块',            cost:15,  cat:'学习装备'},
+ {id:63,icon:'✏️', name:'新铅笔一支',              cost:15,  cat:'学习装备'},
+ {id:64,icon:'🎖️', name:'小徽章一枚',              cost:20,  cat:'学习装备'},
+ {id:65,icon:'📖', name:'新绘本一本',              cost:80,  cat:'学习装备'},
+ {id:66,icon:'🧩', name:'拼图一盒',                cost:90,  cat:'学习装备'},
+ {id:67,icon:'🖍️', name:'彩笔一盒',                cost:60,  cat:'学习装备'},
+ {id:68,icon:'📔', name:'贴纸收集册',              cost:50,  cat:'学习装备'},
+ {id:69,icon:'🥤', name:'新水杯一个',              cost:70,  cat:'学习装备'},
+ {id:70,icon:'🎒', name:'书包小挂件',              cost:30,  cat:'学习装备'},
+ /* 成长惊喜 */
+ {id:71,icon:'🎁', name:'神秘盲盒一个',            cost:60,  cat:'成长惊喜'},
+ {id:72,icon:'📸', name:'和爸妈拍全家福',          cost:30,  cat:'成长惊喜'},
+ {id:73,icon:'📱', name:'给好朋友打视频电话',      cost:20,  cat:'成长惊喜'},
+ {id:74,icon:'🌱', name:'种一盆小植物',            cost:40,  cat:'成长惊喜'},
+ {id:75,icon:'🐟', name:'养小金鱼观察一周',        cost:60,  cat:'成长惊喜'},
+ {id:76,icon:'🐹', name:'去宠物店看小动物',        cost:30,  cat:'成长惊喜'},
+ {id:77,icon:'💌', name:'表扬信贴到荣誉墙',        cost:20,  cat:'成长惊喜'},
+ {id:78,icon:'🧑‍🏫', name:'当小老师教爸妈一课',      cost:25,  cat:'成长惊喜'},
+ {id:79,icon:'⛺', name:'客厅帐篷露营一晚',        cost:150, cat:'成长惊喜'},
+ {id:80,icon:'🎂', name:'生日愿望提前实现一个',    cost:200, cat:'成长惊喜'}
 ];
+var SHOP_CATS=['生活特权','家庭陪伴','户外体验','优选观影','娱乐时光','美食甜点','学习装备','成长惊喜'];
 /* 勋章定义（k 为当前小孩对象） */
 var BADGES=[
  {id:'first',   icon:'🌱', name:'启程之星',   desc:'完成第一次习惯打卡', cond:function(k){return totalHabitDays(k)>=1;}},
@@ -462,7 +535,12 @@ var GUIDE=[
 ];
 
 </script>
+<script src="data-science.js"></script>
+<script src="data-stories.js"></script>
 <script>
+/* ==================== 外部大数据合并（1000条科普 / 50个故事） ==================== */
+if(window.SCIENCE_EXT && window.SCIENCE_EXT.length){ SCIENCE=window.SCIENCE_EXT; }
+if(window.STORIES_EXT && window.STORIES_EXT.length){ STORIES=STORIES.concat(window.STORIES_EXT); }
 /* ==================== 字库合并（详解字 + 扩展字，自动去重） ==================== */
 var LIB=[], _seen={};
 (function(){
@@ -505,6 +583,13 @@ function load(){
       }
       s.shopV3=true;
     }
+    if(!s.shopV4){ /* v4 迁移：补充全部新分类商品，不覆盖家长自定义 */
+      var have4={}; for(var i4=0;i4<s.shop.length;i4++) have4[s.shop[i4].id]=1;
+      for(var j4=0;j4<DEF_SHOP.length;j4++){
+        if(!have4[DEF_SHOP[j4].id]) s.shop.push(JSON.parse(JSON.stringify(DEF_SHOP[j4])));
+      }
+      s.shopV4=true;
+    }
     if(!s.pin) s.pin='8888';
     if(!s.tvRate) s.tvRate={pts:20,min:15};
     return s;
@@ -539,12 +624,38 @@ function addPts(k,n){
 }
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
-/* ==================== 语音与音效 ==================== */
+/* ==================== 语音与音效（自动优选播音级音色） ==================== */
+var _voices=[];
+function loadVoices(){ try{ _voices=speechSynthesis.getVoices()||[]; }catch(e){} }
+try{ loadVoices(); speechSynthesis.onvoiceschanged=loadVoices; }catch(e){}
+/* 音色优先级：Edge Natural 在线音色 > 系统高质量中文女声 > Google 普通话 > 任意中文 */
+var VOICE_PREF_ZH=['xiaoxiao','xiaoyi','yunjian','yunxi','yunyang','huihui','yaoyao','kangkang','tingting','ting-ting','sinji','google 普通话','mandarin'];
+var VOICE_PREF_EN=['aria','jenny','guy','ana','michelle','zira','samantha','google us english'];
+function pickVoice(lang){
+  if(!_voices.length) loadVoices();
+  var isZh=(lang||'zh').indexOf('zh')===0;
+  /* 家长手动指定优先 */
+  var wanted=isZh?(S.voiceZh||''):(S.voiceEn||'');
+  if(wanted){ for(var w=0;w<_voices.length;w++){ if(_voices[w].name===wanted) return _voices[w]; } }
+  var cand=_voices.filter(function(v){ return (v.lang||'').toLowerCase().indexOf(isZh?'zh':'en')===0; });
+  if(!cand.length) return null;
+  /* 1. Natural / Online 在线播音音色（Edge）最优 */
+  for(var i=0;i<cand.length;i++){ var n=cand[i].name.toLowerCase(); if(n.indexOf('natural')>=0||n.indexOf('online')>=0){ if(isZh && (n.indexOf('xiaoxiao')>=0||n.indexOf('yunjian')>=0||n.indexOf('yunyang')>=0)) return cand[i]; } }
+  for(var i1=0;i1<cand.length;i1++){ var n1=cand[i1].name.toLowerCase(); if(n1.indexOf('natural')>=0||n1.indexOf('online')>=0) return cand[i1]; }
+  /* 2. 按偏好名单 */
+  var pref=isZh?VOICE_PREF_ZH:VOICE_PREF_EN;
+  for(var p=0;p<pref.length;p++){ for(var j=0;j<cand.length;j++){ if(cand[j].name.toLowerCase().indexOf(pref[p])>=0) return cand[j]; } }
+  /* 3. 本地服务里的第一个 */
+  for(var k2=0;k2<cand.length;k2++){ if(cand[k2].localService) return cand[k2]; }
+  return cand[0];
+}
 function speak(text,lang,rate){
   try{
     speechSynthesis.cancel();
     var u=new SpeechSynthesisUtterance(text);
-    u.lang=lang||'zh-CN'; u.rate=rate||0.85; u.pitch=1.1;
+    u.lang=lang||'zh-CN'; u.rate=rate||0.85; u.pitch=1.05;
+    var v=pickVoice(u.lang);
+    if(v){ u.voice=v; u.pitch=(v.name.toLowerCase().indexOf('natural')>=0||v.name.toLowerCase().indexOf('online')>=0)?1.0:1.05; }
     speechSynthesis.speak(u);
   }catch(e){}
 }
@@ -873,33 +984,54 @@ function vStudy(){
   else if(studyTab==='story') h+=vStory();
   return h;
 }
-/* ---- 科普百科 ---- */
-var sciTopic=0;
+/* ---- 科普百科（分页） ---- */
+var sciTopic=0, sciPage=0, SCI_PER=10;
+function pageBar(page,total,fn){
+  if(total<=1) return '';
+  var h='<div class="subtabs" style="margin-top:10px;justify-content:center">';
+  h+='<button '+(page<=0?'disabled':'')+' onclick="'+fn+'('+(page-1)+')">⬅️</button>';
+  for(var p=0;p<total;p++){
+    if(total>12 && Math.abs(p-page)>4 && p!==0 && p!==total-1){ if(Math.abs(p-page)===5) h+='<span style="align-self:center">…</span>'; continue; }
+    h+='<button class="'+(p===page?'on':'')+'" onclick="'+fn+'('+p+')">'+(p+1)+'</button>';
+  }
+  h+='<button '+(page>=total-1?'disabled':'')+' onclick="'+fn+'('+(page+1)+')">➡️</button></div>';
+  return h;
+}
 function vScience(){
   if(sciTopic>=SCIENCE.length) sciTopic=0;
-  var h='<div class="card"><h2>🔬 科普百科 <span class="hint">听一听，世界真奇妙！</span></h2>'+
+  var total=0; for(var t0=0;t0<SCIENCE.length;t0++) total+=SCIENCE[t0].items.length;
+  var h='<div class="card"><h2>🔬 科普百科 <span class="hint">共 '+total+' 条，世界真奇妙！</span></h2>'+
     '<p class="hint">选一个主题，点🔊听小百科；听完可以讲给爸爸妈妈听哦。</p><div class="subtabs" style="margin-top:8px">';
   for(var t=0;t<SCIENCE.length;t++){
     h+='<button class="'+(sciTopic===t?'on':'')+'" onclick="sciGo('+t+')">'+SCIENCE[t].t+'</button>';
   }
   h+='</div>';
   var g=SCIENCE[sciTopic];
-  for(var i=0;i<g.items.length;i++){
+  var pages=Math.ceil(g.items.length/SCI_PER);
+  if(sciPage>=pages) sciPage=0;
+  h+='<p class="hint" style="margin-top:6px">'+g.t+'：共 '+g.items.length+' 条 · 第 '+(sciPage+1)+' / '+pages+' 页</p>';
+  var st=sciPage*SCI_PER, en=Math.min(g.items.length,st+SCI_PER);
+  for(var i=st;i<en;i++){
     var it=g.items[i];
     h+='<div class="poem"><div class="pt-title">'+it[0]+' '+it[1]+'</div>'+
        '<div class="pt-line" style="font-size:16px;text-align:left;line-height:1.8">'+it[2]+'</div>'+
        '<div class="ops"><button class="btn sm" onclick="sciTap('+sciTopic+','+i+')">🔊 听百科</button></div></div>';
   }
+  h+=pageBar(sciPage,pages,'sciPageGo');
   return h+'</div>';
 }
-function sciGo(t){ sciTopic=t; render(); }
+function sciGo(t){ sciTopic=t; sciPage=0; render(); }
+function sciPageGo(p){ sciPage=p; render(); window.scrollTo(0,0); }
 function sciTap(t,i){ var it=SCIENCE[t].items[i]; chime(); speak(it[1]+'。'+it[2],'zh-CN',0.85); }
-/* ---- 经典故事绘本 ---- */
-var storyShow={};
+/* ---- 经典故事绘本（分页） ---- */
+var storyShow={}, stoPage=0, STO_PER=10;
 function vStory(){
-  var h='<div class="card"><h2>📚 经典故事绘本 <span class="hint">共 '+STORIES.length+' 个睡前好故事</span></h2>'+
+  var pages=Math.ceil(STORIES.length/STO_PER);
+  if(stoPage>=pages) stoPage=0;
+  var h='<div class="card"><h2>📚 经典故事绘本 <span class="hint">共 '+STORIES.length+' 个睡前好故事 · 第 '+(stoPage+1)+' / '+pages+' 页</span></h2>'+
     '<p class="hint">点▶️听完整故事，点"看故事"可以和爸爸妈妈一起指读文字。</p></div>';
-  for(var i=0;i<STORIES.length;i++){
+  var st0=stoPage*STO_PER, en0=Math.min(STORIES.length,st0+STO_PER);
+  for(var i=st0;i<en0;i++){
     var st=STORIES[i];
     h+='<div class="poem"><div class="pt-title">'+st.e+' '+st.t+'</div>';
     if(storyShow[i]){
@@ -914,8 +1046,10 @@ function vStory(){
       '<button class="btn sm yellow" onclick="storyToggle('+i+')">'+(storyShow[i]?'收起故事':'📖 看故事')+'</button>'+
     '</div></div>';
   }
+  h+='<div class="card">'+pageBar(stoPage,pages,'stoPageGo')+'</div>';
   return h;
 }
+function stoPageGo(p){ stoPage=p; render(); window.scrollTo(0,0); }
 function storyPlay(i){ var st=STORIES[i]; chime(); speak(st.t+'。'+st.body.join('')+'这个故事告诉我们：'+st.m,'zh-CN',0.9); }
 function storyStop(){ try{speechSynthesis.cancel();}catch(e){} }
 function storyToggle(i){ storyShow[i]=!storyShow[i]; render(); }
@@ -1244,6 +1378,8 @@ function vHabit(){
 }
 
 /* ==================== 积分商城 ==================== */
+var shopCat='全部';
+function shopGo(c){ shopCat=c; render(); }
 function vShop(){
   var k=K();
   var cats={};
@@ -1253,8 +1389,12 @@ function vShop(){
     cats[it.cat].push(it);
   }
   var h='<div class="card"><h2>🛍️ 积分商城 <span class="hint">'+esc(kidLabel(k))+' 当前 ⭐'+k.points+'</span></h2>'+
-    '<p class="hint">兑换后会生成专属兑换券，请找爸爸妈妈核销兑现！</p></div>';
+    '<p class="hint">兑换后会生成专属兑换券，请找爸爸妈妈核销兑现！</p>'+
+    '<div class="subtabs" style="margin-top:8px"><button class="'+(shopCat==='全部'?'on':'')+'" onclick="shopGo(\'全部\')">全部</button>';
+  for(var c0 in cats){ h+='<button class="'+(shopCat===c0?'on':'')+'" onclick="shopGo(\''+c0+'\')">'+c0+'</button>'; }
+  h+='</div></div>';
   for(var c in cats){
+    if(shopCat!=='全部' && shopCat!==c) continue;
     h+='<div class="card"><span class="cat-tag">'+c+'</span>';
     for(var j=0;j<cats[c].length;j++){
       var it=cats[c][j];
@@ -1517,7 +1657,34 @@ function pvStudy(){
     '<div class="prow"><input class="num" id="rate_p" type="number" min="1" value="'+S.tvRate.pts+'"><label>积分 →</label>'+
     '<input class="num" id="rate_m" type="number" min="1" value="'+S.tvRate.min+'"><label>分钟</label>'+
     '<button class="btn sm purple" onclick="saveRate()">保存</button></div></div>';
+  /* 语音音色设置 */
+  loadVoices();
+  var zhV=_voices.filter(function(v){return (v.lang||'').toLowerCase().indexOf('zh')===0;});
+  var enV=_voices.filter(function(v){return (v.lang||'').toLowerCase().indexOf('en')===0;});
+  var curZh=pickVoice('zh-CN'), curEn=pickVoice('en-US');
+  function vopts(list,sel){
+    var o='<option value="">🤖 自动优选（推荐）</option>';
+    for(var vi=0;vi<list.length;vi++){ o+='<option value="'+esc(list[vi].name)+'"'+(sel===list[vi].name?' selected':'')+'>'+esc(list[vi].name)+'</option>'; }
+    return o;
+  }
+  h+='<div class="card"><h2>🔊 朗读音色（全局）</h2>'+
+    '<p class="hint">自动优选会挑选设备上最接近播音员的音色。想要最好的普通话播音音质，推荐用 <b>Edge 浏览器</b> 打开（内置“晓晓/云健”等 Natural 在线音色）；iPhone 可在 设置→辅助功能→朗读内容 里下载“婷婷(高品质)”。</p>'+
+    '<div class="prow"><label>中文</label><select id="voiceZhSel" style="flex:1;min-width:180px">'+vopts(zhV,S.voiceZh||'')+'</select>'+
+    '<button class="btn xs blue" onclick="testVoice(0)">试听</button></div>'+
+    '<div class="prow"><label>英文</label><select id="voiceEnSel" style="flex:1;min-width:180px">'+vopts(enV,S.voiceEn||'')+'</select>'+
+    '<button class="btn xs blue" onclick="testVoice(1)">试听</button></div>'+
+    '<p class="hint">当前生效：中文 '+(curZh?esc(curZh.name):'系统默认')+' ｜ 英文 '+(curEn?esc(curEn.name):'系统默认')+'</p>'+
+    '<button class="btn sm purple" onclick="saveVoice()">💾 保存音色</button></div>';
   return h;
+}
+function saveVoice(){
+  S.voiceZh=document.getElementById('voiceZhSel').value;
+  S.voiceEn=document.getElementById('voiceEnSel').value;
+  save(); toast('朗读音色已保存'); render();
+}
+function testVoice(en){
+  if(en){ S.voiceEn=document.getElementById('voiceEnSel').value; speak('Hello! Nice to meet you, my friend.','en-US',0.9); }
+  else { S.voiceZh=document.getElementById('voiceZhSel').value; speak('你好呀，小朋友！今天也要元气满满哦。','zh-CN',0.9); }
 }
 function saveGoal(id){
   var k=kidById(id); if(!k) return;
@@ -1600,7 +1767,7 @@ function pvShop(){
       '<input class="sh-name" value="'+esc(it.name)+'" style="flex:2;min-width:130px">'+
       '<input class="num sh-cost" type="number" value="'+it.cost+'" min="1">'+
       '<select class="sh-cat" style="max-width:110px">'+
-        ['生活特权','家庭陪伴','户外体验','娱乐时光'].map(function(c){return '<option'+(it.cat===c?' selected':'')+'>'+c+'</option>';}).join('')+
+        SHOP_CATS.map(function(c){return '<option'+(it.cat===c?' selected':'')+'>'+c+'</option>';}).join('')+
       '</select>'+
       '<button class="btn xs pink" onclick="delShopItem('+it.id+')">删</button></div>';
   }
@@ -1608,7 +1775,7 @@ function pvShop(){
     '<input class="icon-in" id="nsIcon" value="🎈" maxlength="4">'+
     '<input id="nsName" placeholder="新奖励名称" style="flex:2;min-width:130px">'+
     '<input class="num" id="nsCost" type="number" value="30" min="1">'+
-    '<select id="nsCat" style="max-width:110px"><option>生活特权</option><option>家庭陪伴</option><option>户外体验</option><option>娱乐时光</option></select>'+
+    '<select id="nsCat" style="max-width:110px">'+SHOP_CATS.map(function(c){return '<option>'+c+'</option>';}).join('')+'</select>'+
     '<button class="btn xs green" onclick="addShopItem()">➕</button></div>'+
     '<button class="btn sm purple mt" onclick="saveShopAll()">💾 保存全部修改</button></div>';
   return h;
