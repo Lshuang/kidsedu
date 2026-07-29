@@ -1309,7 +1309,7 @@ function checkPin(){
   else{ toast('密码不对哦'); document.getElementById('pinIn').value=''; }
 }
 function exitParent(){ parentAuthed=false; go('home'); }
-var PTABS=[['kids','👨‍👧 小孩管理'],['study','🎯 学习目标'],['adjust','⭐ 积分补签'],['shopmg','🛍️ 商城管理'],['guide','📕 避坑指南']];
+var PTABS=[['kids','👨‍👧 小孩管理'],['study','🎯 学习目标'],['adjust','⭐ 积分补签'],['shopmg','🛍️ 商城管理'],['guide','📕 避坑指南'],['backup','💾 备份同步']];
 function goPTab(t){ pTab=t; render(); }
 function vParent(){
   var h='<div class="card" style="background:#FDF8FF"><h2>🔧 家长控制中心</h2>'+
@@ -1325,7 +1325,46 @@ function vParent(){
   else if(pTab==='adjust') h+=pvAdjust();
   else if(pTab==='shopmg') h+=pvShop();
   else if(pTab==='guide') h+=pvGuide();
+  else if(pTab==='backup') h+=pvBackup();
   return h;
+}
+function pvBackup(){
+  var h='<div class="card"><h2>💾 数据备份与多设备同步</h2>'+
+    '<p class="hint">数据默认只保存在本机浏览器。换手机/平板前，先「导出备份」把全部小孩数据存成一个文件；'+
+    '在新设备打开本应用后「导入备份」即可恢复，轻松实现多设备同步。</p>'+
+    '<div class="flex mt">'+
+    '<button class="btn sm green" onclick="exportData()">⬇️ 导出备份</button>'+
+    '<button class="btn sm purple" onclick="document.getElementById(\'impFile\').click()">⬆️ 导入备份</button>'+
+    '<input id="impFile" type="file" accept="application/json" style="display:none" onchange="importData(this)">'+
+    '</div>'+
+    '<p class="hint mt">⚠️ 导出的文件包含全部学习进度，请妥善保存，不要随意转发他人。</p></div>';
+  return h;
+}
+function exportData(){
+  try{
+    var blob=new Blob([JSON.stringify(localStorage)],{type:'application/json'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='kidsedu-backup-'+new Date().toISOString().slice(0,10)+'.json';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href); document.body.removeChild(a);},100);
+    toast('备份文件已下载');
+  }catch(e){ toast('导出失败'); }
+}
+function importData(el){
+  var f=el.files&&el.files[0]; if(!f){return;}
+  if(!confirm('导入会覆盖当前设备的全部数据，确定继续？建议先导出当前备份。')){ el.value=''; return; }
+  var r=new FileReader();
+  r.onload=function(){
+    try{
+      var data=JSON.parse(r.result);
+      for(var key in data){ localStorage.setItem(key, data[key]); }
+      toast('导入成功，正在重启…');
+      setTimeout(function(){ location.reload(); },800);
+    }catch(e){ toast('文件格式不对'); }
+    el.value='';
+  };
+  r.readAsText(f);
 }
 function pvKids(){
   var h='<div class="card"><h2>👨‍👧 小孩账号管理</h2><p class="hint">每个孩子的计划、字库、积分、时长、勋章完全独立、互不影响。</p><div class="mt"></div>';
