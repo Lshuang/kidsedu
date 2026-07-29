@@ -1,5 +1,5 @@
-const CACHE = 'kidsedu-v3';
-const ASSETS = ['./', './index.html', './data-science.js', './data-stories.js', './icon-192.png', './icon-512.png', './manifest.webmanifest'];
+const CACHE = 'kidsedu-v4';
+const ASSETS = ['./', './index.html', './habit.html', './data-science.js', './data-stories.js', './icon-192.png', './icon-512.png', './manifest.webmanifest'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
