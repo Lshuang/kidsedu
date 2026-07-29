@@ -649,15 +649,78 @@ function pickVoice(lang){
   for(var k2=0;k2<cand.length;k2++){ if(cand[k2].localService) return cand[k2]; }
   return cand[0];
 }
-function speak(text,lang,rate){
+/* ---- 在线语音兜底（华为鸿蒙等浏览器常无系统 TTS，点了没声音时自动启用） ---- */
+var _aud=null,_audQ=[],_ttsBroken=false;
+try{ _ttsBroken=localStorage.getItem('kidsedu_ttsBroken')==='1'; }catch(e){}
+function markTtsBroken(v){ _ttsBroken=!!v; try{ localStorage.setItem('kidsedu_ttsBroken',v?'1':'0'); }catch(e){} }
+function speakStop(){
+  try{ speechSynthesis.cancel(); }catch(e){}
+  _audQ=[];
+  if(_aud){ try{ _aud.onended=null; _aud.onerror=null; _aud.pause(); }catch(e){} _aud=null; }
+}
+function splitChunks(text,max){
+  var s=String(text),out=[],cur='';
+  for(var i=0;i<s.length;i++){
+    cur+=s.charAt(i);
+    if(cur.length>=max || (cur.length>=40 && '。！？；!?;\n'.indexOf(s.charAt(i))>=0)){ out.push(cur); cur=''; }
+  }
+  if(cur.replace(/\s/g,'')) out.push(cur);
+  return out;
+}
+function playOnline(text,lang){
+  var isZh=(lang||'zh').indexOf('zh')===0;
+  _audQ=splitChunks(text,isZh?120:200).map(function(t){
+    var e=encodeURIComponent(t);
+    return [
+      'https://fanyi.baidu.com/gettts?lan='+(isZh?'zh':'en')+'&text='+e+'&spd='+(isZh?4:3)+'&source=web',
+      'https://dict.youdao.com/dictvoice?audio='+e+'&le='+(isZh?'zh':'eng')
+    ];
+  });
+  playNextChunk();
+}
+function playNextChunk(){
+  if(!_audQ.length){ _aud=null; return; }
+  var urls=_audQ.shift();
+  playUrl(urls,0);
+}
+function playUrl(urls,idx){
+  if(idx>=urls.length){ playNextChunk(); return; }
   try{
-    speechSynthesis.cancel();
+    _aud=new Audio(urls[idx]);
+    _aud.onended=playNextChunk;
+    _aud.onerror=function(){ playUrl(urls,idx+1); };  /* 主源失败换备用源 */
+    var p=_aud.play();
+    if(p&&p.catch) p.catch(function(){ /* 首次可能被自动播放策略拦，下次点击即正常 */ });
+  }catch(e){ playUrl(urls,idx+1); }
+}
+function speak(text,lang,rate){
+  speakStop();
+  var engine=S.voiceEngine||'auto';
+  var lg=lang||'zh-CN';
+  if(engine==='online'||(engine==='auto'&&_ttsBroken)){ playOnline(text,lg); return; }
+  var v=null;
+  try{ v=pickVoice(lg); }catch(e){}
+  /* 自动模式下：设备完全没有对应语言的语音包（鸿蒙常见）→ 直接走在线语音 */
+  if(engine==='auto' && !v && typeof speechSynthesis!=='undefined'){
+    loadVoices();
+    var hasLang=_voices.some(function(x){ return (x.lang||'').toLowerCase().indexOf(lg.indexOf('zh')===0?'zh':'en')===0; });
+    if(!hasLang && _voices.length===0){ playOnline(text,lg); return; }
+  }
+  try{
     var u=new SpeechSynthesisUtterance(text);
-    u.lang=lang||'zh-CN'; u.rate=rate||0.85; u.pitch=1.05;
-    var v=pickVoice(u.lang);
+    u.lang=lg; u.rate=rate||0.85; u.pitch=1.05;
     if(v){ u.voice=v; u.pitch=(v.name.toLowerCase().indexOf('natural')>=0||v.name.toLowerCase().indexOf('online')>=0)?1.0:1.05; }
+    var started=false;
+    u.onstart=function(){ started=true; if(_ttsBroken) markTtsBroken(false); };
+    if(engine==='auto'){
+      u.onerror=function(){ if(!started){ markTtsBroken(true); playOnline(text,lg); } };
+      setTimeout(function(){
+        /* 2.5秒还没真正开始发声 → 判定系统TTS失效，改用在线语音并记住（下次直接走在线） */
+        if(!started){ try{ speechSynthesis.cancel(); }catch(e){} markTtsBroken(true); playOnline(text,lg); }
+      },2500);
+    }
     speechSynthesis.speak(u);
-  }catch(e){}
+  }catch(e){ playOnline(text,lg); }
 }
 var _actx=null;
 function chime(kind){
@@ -1051,7 +1114,7 @@ function vStory(){
 }
 function stoPageGo(p){ stoPage=p; render(); window.scrollTo(0,0); }
 function storyPlay(i){ var st=STORIES[i]; chime(); speak(st.t+'。'+st.body.join('')+'这个故事告诉我们：'+st.m,'zh-CN',0.9); }
-function storyStop(){ try{speechSynthesis.cancel();}catch(e){} }
+function storyStop(){ speakStop(); }
 function storyToggle(i){ storyShow[i]=!storyShow[i]; render(); }
 /* ---- 拼音 ---- */
 function pyCards(arr,g,cls){
@@ -1667,8 +1730,15 @@ function pvStudy(){
     for(var vi=0;vi<list.length;vi++){ o+='<option value="'+esc(list[vi].name)+'"'+(sel===list[vi].name?' selected':'')+'>'+esc(list[vi].name)+'</option>'; }
     return o;
   }
+  var eng=S.voiceEngine||'auto';
   h+='<div class="card"><h2>🔊 朗读音色（全局）</h2>'+
     '<p class="hint">自动优选会挑选设备上最接近播音员的音色。想要最好的普通话播音音质，推荐用 <b>Edge 浏览器</b> 打开（内置“晓晓/云健”等 Natural 在线音色）；iPhone 可在 设置→辅助功能→朗读内容 里下载“婷婷(高品质)”。</p>'+
+    '<div class="prow"><label>引擎</label><select id="voiceEngSel" style="flex:1;min-width:180px">'+
+      '<option value="auto"'+(eng==='auto'?' selected':'')+'>🤖 自动（无声时切在线语音）</option>'+
+      '<option value="local"'+(eng==='local'?' selected':'')+'>📱 设备语音</option>'+
+      '<option value="online"'+(eng==='online'?' selected':'')+'>🌐 在线语音（华为/鸿蒙推荐）</option>'+
+    '</select></div>'+
+    '<p class="hint">📢 华为/荣耀（鸿蒙）浏览器点语音常常没声音——因为系统缺少网页语音包。选“在线语音”即可正常发声（需联网）；“自动”模式会在检测到没声音时自己切换。</p>'+
     '<div class="prow"><label>中文</label><select id="voiceZhSel" style="flex:1;min-width:180px">'+vopts(zhV,S.voiceZh||'')+'</select>'+
     '<button class="btn xs blue" onclick="testVoice(0)">试听</button></div>'+
     '<div class="prow"><label>英文</label><select id="voiceEnSel" style="flex:1;min-width:180px">'+vopts(enV,S.voiceEn||'')+'</select>'+
@@ -1678,11 +1748,14 @@ function pvStudy(){
   return h;
 }
 function saveVoice(){
+  S.voiceEngine=document.getElementById('voiceEngSel').value;
   S.voiceZh=document.getElementById('voiceZhSel').value;
   S.voiceEn=document.getElementById('voiceEnSel').value;
-  save(); toast('朗读音色已保存'); render();
+  if(S.voiceEngine!=='auto') markTtsBroken(false);
+  save(); toast('朗读设置已保存'); render();
 }
 function testVoice(en){
+  S.voiceEngine=document.getElementById('voiceEngSel').value;
   if(en){ S.voiceEn=document.getElementById('voiceEnSel').value; speak('Hello! Nice to meet you, my friend.','en-US',0.9); }
   else { S.voiceZh=document.getElementById('voiceZhSel').value; speak('你好呀，小朋友！今天也要元气满满哦。','zh-CN',0.9); }
 }
