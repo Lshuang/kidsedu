@@ -235,6 +235,22 @@ input.icon-in{max-width:60px;text-align:center}
 @keyframes bnc{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
 .shake{display:inline-block;animation:shk .5s}
 @keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+/* ================= 牛津树绘本阅读器 ================= */
+.book-cover{font-size:54px;line-height:1;margin-bottom:2px}
+.book-title{font-size:18px;font-weight:800;margin:2px 0 8px}
+.book-title .lvl{font-size:12px;color:var(--muted);font-weight:700}
+.book-page{
+  background:linear-gradient(180deg,#FFFCF3,#FFF3DC);border:2px dashed #FFD27F;border-radius:20px;
+  padding:20px 14px;margin:4px 0 10px;cursor:pointer;transition:transform .12s;
+}
+.book-page:active{transform:scale(.97)}
+.book-page .scene{font-size:64px;line-height:1.05}
+.book-page .en{font-size:23px;font-weight:800;color:#E8590C;margin-top:10px;line-height:1.3}
+.book-page .zh{font-size:16.5px;color:#5a5a5a;margin-top:5px;line-height:1.35}
+.book-page .tap{font-size:12.5px;color:#C98A2B;margin-top:8px}
+.book-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:2px}
+.book-nav .pg{font-size:13px;font-weight:800;color:var(--muted)}
+.book-page .scene{animation:pop .3s}
 .voucher{
   background:linear-gradient(135deg,#FFF7DE,#FFEFF6);border:3px dashed #F7B32B;border-radius:20px;
   padding:18px;margin:10px 0;text-align:center;
@@ -363,6 +379,152 @@ var ENWORDS={
  '🎨 颜色':[['red','红色','🔴'],['blue','蓝色','🔵'],['yellow','黄色','🟡'],['green','绿色','🟢'],['purple','紫色','🟣'],['pink','粉色','🌸'],['black','黑色','⚫'],['white','白色','⚪']],
  '🙋 身体':[['head','头','👦'],['eye','眼睛','👀'],['ear','耳朵','👂'],['nose','鼻子','👃'],['mouth','嘴巴','👄'],['hand','手','✋'],['foot','脚','🦶'],['arm','手臂','💪'],['leg','腿','🦵'],['face','脸','😊']]
 };
+/* 英语儿歌（Super Simple Songs 经典曲目；歌词取自传统童谣，点卡片听歌名+首句，会唱了点亮） */
+var SSS_SONGS=[
+ {t:'Twinkle Twinkle Little Star', zh:'一闪一闪小星星', icon:'🌟', lines:['Twinkle, twinkle, little star,','How I wonder what you are.','Up above the world so high,','Like a diamond in the sky.']},
+ {t:'Old MacDonald Had a Farm', zh:'老麦克唐纳的农场', icon:'🚜', lines:['Old MacDonald had a farm,','Ee i ee i o.','And on his farm he had a cow,','Ee i ee i o.']},
+ {t:'The Wheels on the Bus', zh:'巴士上的轮子', icon:'🚌', lines:['The wheels on the bus go round and round,','Round and round, round and round.','The wheels on the bus go round and round,','All through the town.']},
+ {t:'If You are Happy and You Know It', zh:'如果你感到快乐', icon:'👏', lines:['If you are happy and you know it, clap your hands.','Clap, clap.','If you are happy and you know it, clap your hands.','Clap, clap.']},
+ {t:'Head, Shoulders, Knees and Toes', zh:'头肩膀膝盖脚', icon:'💃', lines:['Head, shoulders, knees and toes,','Knees and toes.','Head, shoulders, knees and toes,','Eyes and ears and mouth and nose.']},
+ {t:'Baby Shark', zh:'鲨鱼宝宝', icon:'🦈', lines:['Baby shark, doo doo doo doo doo doo.','Baby shark, doo doo doo doo doo doo.','Baby shark, doo doo doo doo doo doo.','Baby shark!']},
+ {t:'Five Little Ducks', zh:'五只小鸭子', icon:'🦆', lines:['Five little ducks went out one day,','Over the hills and far away.','Mother duck said, Quack quack quack quack,','But only four little ducks came back.']},
+ {t:'Row, Row, Row Your Boat', zh:'划呀划小船', icon:'🚣', lines:['Row, row, row your boat,','Gently down the stream.','Merrily, merrily, merrily, merrily,','Life is but a dream.']},
+ {t:'Bingo', zh:'宾果小狗', icon:'🐶', lines:['There was a farmer had a dog,','And Bingo was his name-o.','B-I-N-G-O, B-I-N-G-O,','B-I-N-G-O, and Bingo was his name-o.']},
+ {t:'The ABC Song', zh:'ABC字母歌', icon:'🔤', lines:['A B C D E F G,','H I J K L M N O P.','Q R S, T U V,','W X Y and Z.']},
+ {t:'Walking Walking', zh:'走呀走', icon:'🚶', lines:['Walking, walking, walking, walking,','Hop, hop, hop, hop, hop, hop.','Running, running, running, running,','Now we stop. Now we stop.']},
+ {t:'Clean Up', zh:'收拾整理歌', icon:'🧹', lines:['Clean up, clean up, everybody everywhere.','Clean up, clean up, everybody do your share.']},
+ {t:'The Hokey Pokey', zh:'霍基波基舞', icon:'🕺', lines:['You put your right hand in,','You put your right hand out.','You do the hokey pokey,','And you turn yourself about.']},
+ {t:'Mary Had a Little Lamb', zh:'玛丽的小羊羔', icon:'🐑', lines:['Mary had a little lamb,','Little lamb, little lamb.','Mary had a little lamb,','Its fleece was white as snow.']},
+ {t:'London Bridge Is Falling Down', zh:'伦敦桥倒塌了', icon:'🌉', lines:['London Bridge is falling down,','Falling down, falling down.','London Bridge is falling down,','My fair lady.']},
+ {t:'Rain Rain Go Away', zh:'雨呀雨快走开', icon:'☔', lines:['Rain, rain, go away,','Come again another day.','Little children want to play,','Rain, rain, go away.']},
+ {t:'One Little Finger', zh:'一根小手指', icon:'👆', lines:['One little finger, one little finger,','Tap, tap, tap.','Put your finger up,','Put your finger down.']},
+ {t:'Ten in the Bed', zh:'床上有十个人', icon:'🛏️', lines:['There were ten in the bed,','And the little one said,','Roll over, roll over.','So they all rolled over and one fell out.']},
+ {t:'Johny Johny Yes Papa', zh:'约翰约翰', icon:'👶', lines:['Johny, Johny! Yes, Papa?','Eating sugar? No, Papa.','Telling lies? No, Papa.','Open your mouth! Ha! Ha! Ha!']},
+ {t:'Pat-a-Cake', zh:'拍蛋糕', icon:'🎂', lines:['Pat-a-cake, pat-a-cake, baker man.','Bake me a cake as fast as you can.','Pat it and prick it and mark it with B,','And put it in the oven for baby and me.']}
+];
+/* 牛津阅读树（Oxford Reading Tree 分级读物；书名为官方名，简介为原创一句话导读，点读英文书名） */
+var OXFORD=[
+ {t:'Kipper Diary', zh:'基珀的日记', lvl:'L1', icon:'🐶', desc:'小狗基珀画下了一天里发生的有趣事情。', pages:[
+   ['🐶','Kipper has a diary.','基珀有一本日记。'],
+   ['☀️','In the morning, he eats eggs.','早上，他吃鸡蛋。'],
+   ['🎨','In the afternoon, he paints a picture.','下午，他画了一幅画。'],
+   ['🛁','In the evening, he has a bath.','晚上，他洗了个澡。'],
+   ['😴','Kipper is happy. Good night!','基珀很开心。晚安！']]},
+ {t:'The Lost Teddy', zh:'丢失的泰迪熊', lvl:'L1', icon:'🧸', desc:'基珀找不到心爱的小熊了，一家人帮忙四处寻找。', pages:[
+   ['🧸','Kipper has a teddy.','基珀有一只泰迪熊。'],
+   ['😢','Oh no! The teddy is lost.','哎呀！泰迪熊不见了。'],
+   ['🔍','Mum helps Kipper look.','妈妈帮基珀一起找。'],
+   ['🛏️','Here it is, under the bed!','在这里，在床底下！'],
+   ['🤗','Kipper hugs his teddy.','基珀抱住了他的泰迪熊。']]},
+ {t:'Floppy Did This', zh:'是弗洛皮干的', lvl:'L1', icon:'🐕', desc:'家里发生了奇怪的事，大家都说是小狗弗洛皮做的。', pages:[
+   ['🐕','This is Floppy the dog.','这是小狗弗洛皮。'],
+   ['💦','The water is on the floor.','地板上都是水。'],
+   ['🍪','The cookie is broken.','饼干被弄碎了。'],
+   ['🐕','Floppy did this!','是弗洛皮干的！'],
+   ['😄','They all laugh.','大家都笑了。']]},
+ {t:'Six in a Bed', zh:'床上六个', lvl:'L1', icon:'🛏️', desc:'一家人挤在一张大床上，热热闹闹真好玩。', pages:[
+   ['🛏️','Dad is in the bed.','爸爸在床上。'],
+   ['👦','Biff is in the bed.','比夫在床上。'],
+   ['👧','Chip is in the bed.','奇普在床上。'],
+   ['🐶','Floppy is in the bed too!','弗洛皮也在床上！'],
+   ['😴','Six in a bed! So cosy.','床上六个！真暖和。']]},
+ {t:'Get On', zh:'上来吧', lvl:'L1', icon:'🚌', desc:'大家一个接一个地上车，看看一共能坐多少。', pages:[
+   ['🚌','The bus is here.','公交车来了。'],
+   ['👦','Biff gets on.','比夫上去了。'],
+   ['👧','Chip gets on.','奇普上去了。'],
+   ['🐶','Floppy gets on too.','弗洛皮也上去了。'],
+   ['🎉','Off they go!','他们出发啦！']]},
+ {t:'Go Away Floppy', zh:'走开弗洛皮', lvl:'L1', icon:'🙅', desc:'小狗弗洛皮总想跟着孩子们，这回大家让它走开。', pages:[
+   ['🐕','Floppy wants to play.','弗洛皮想玩。'],
+   ['🙅','Go away, Floppy!','走开，弗洛皮！'],
+   ['🌳','The children play outside.','孩子们在外面玩。'],
+   ['🐕','Floppy runs away.','弗洛皮跑开了。'],
+   ['😢','Floppy is sad.','弗洛皮很伤心。']]},
+ {t:'The Haircut', zh:'理发', lvl:'L1', icon:'✂️', desc:'孩子们第一次去理发店剪头发，有点小紧张。', pages:[
+   ['✂️','Dad has scissors.','爸爸拿着剪刀。'],
+   ['👦','Biff sits down.','比夫坐下来。'],
+   ['✂️','Snip, snap, snip!','咔嚓、咔嚓！'],
+   ['🪞','Look in the mirror!','照照镜子！'],
+   ['😄','Biff has new hair!','比夫有了新发型。']]},
+ {t:'The Pancake', zh:'煎饼', lvl:'L1', icon:'🥞', desc:'妈妈做煎饼，孩子们争着要最大最香的一块。', pages:[
+   ['🥞','Mum makes a pancake.','妈妈做了一张煎饼。'],
+   ['🍯','It has honey.','上面有蜂蜜。'],
+   ['👦','Biff wants the big one.','比夫想要最大的那块。'],
+   ['👧','Chip wants the big one too.','奇普也想要最大的那块。'],
+   ['😋','Yummy pancake!','煎饼真好吃！']]},
+ {t:'A Good Trick', zh:'好把戏', lvl:'L1', icon:'🎩', desc:'孩子们变了一个有趣的小魔术，逗得大家哈哈笑。', pages:[
+   ['🎩','Chip has a hat.','奇普有一顶帽子。'],
+   ['🐰','He shows a rabbit!','他变出一只兔子！'],
+   ['😲','Wow! A rabbit!','哇！一只兔子！'],
+   ['👏','The children clap.','孩子们鼓掌。'],
+   ['😄','What a good trick!','好厉害的把戏！']]},
+ {t:'The Dream', zh:'梦', lvl:'L1', icon:'😴', desc:'基珀做了一个奇妙的梦，梦里到底发生了什么？', pages:[
+   ['😴','Kipper is asleep.','基珀睡着了。'],
+   ['☁️','He dreams of clouds.','他梦见云朵。'],
+   ['🚀','He dreams of a rocket.','他梦见火箭。'],
+   ['🦄','He dreams of a unicorn.','他梦见独角兽。'],
+   ['😊','A happy dream.','一个快乐的梦。']]},
+ {t:'The Dog Tag', zh:'狗牌', lvl:'L1', icon:'🏷️', desc:'弗洛皮的项圈牌不见了，大家一起帮它寻找。', pages:[
+   ['🏷️','Floppy has a tag.','弗洛皮有一个狗牌。'],
+   ['😢','The tag is lost.','狗牌不见了。'],
+   ['🔍','Kipper looks in the garden.','基珀在花园里找。'],
+   ['🌿','Here is the tag!','狗牌在这里！'],
+   ['🐕','Floppy is happy.','弗洛皮很高兴。']]},
+ {t:'What a Din', zh:'好吵呀', lvl:'L1', icon:'📢', desc:'孩子们玩得太吵，妈妈让大家小声一点点。', pages:[
+   ['📢','The children shout.','孩子们在大喊。'],
+   ['🥁','Biff plays the drum.','比夫敲鼓。'],
+   ['🎶','Chip sings a song.','奇普在唱歌。'],
+   ['🙅','Mum says, "Quiet, please!"','妈妈说："请小声一点！"'],
+   ['🤫','Shh... so quiet.','嘘……好安静。']]},
+ {t:'The Journey', zh:'旅行', lvl:'L1', icon:'🚗', desc:'一家人坐车出门旅行，路上看到了好多新鲜事物。', pages:[
+   ['🚗','The family goes on a trip.','一家人去旅行。'],
+   ['🌳','They see big trees.','他们看到大树。'],
+   ['🐮','They see a cow.','他们看到一头牛。'],
+   ['🌈','They see a rainbow.','他们看到彩虹。'],
+   ['🏠','Home again, happy!','回到家，真开心！']]},
+ {t:'Goal', zh:'进球', lvl:'L1', icon:'⚽', desc:'孩子们在草地上踢球，终于齐心协力进了一个球。', pages:[
+   ['⚽','The children play football.','孩子们踢足球。'],
+   ['🏃','Chip runs fast.','奇普跑得很快。'],
+   ['⚽','Kick the ball!','踢球！'],
+   ['🥅','Goal! The ball is in!','进球！球进啦！'],
+   ['🎉','Hooray! They win!','好耶！他们赢了！']]},
+ {t:'Who Did It', zh:'是谁做的', lvl:'L1', icon:'❓', desc:'东西弄乱了，大家猜猜到底是谁干的。', pages:[
+   ['🧦','The sock is wet.','袜子湿了。'],
+   ['💦','The floor is wet too.','地板也湿了。'],
+   ['❓','Who did it?','是谁干的？'],
+   ['🐕','Floppy looks guilty.','弗洛皮看起来心虚。'],
+   ['😄','Floppy did it!','是弗洛皮干的！']]},
+ {t:'The Duck Race', zh:'小鸭赛跑', lvl:'L1', icon:'🦆', desc:'孩子们让玩具鸭比赛，看谁的鸭子游得最快。', pages:[
+   ['🦆','The ducks are ready.','小鸭们准备好了。'],
+   ['💧','They swim in the water.','它们在水中游。'],
+   ['🏁','Go, little ducks!','加油，小鸭们！'],
+   ['🥇','One duck is first!','一只鸭子得第一！'],
+   ['🎉','Hooray for the duck!','为小鸭欢呼！']]},
+ {t:'Silly Races', zh:'滑稽赛跑', lvl:'L1', icon:'🏃', desc:'孩子们用各种搞笑姿势赛跑，笑个不停。', pages:[
+   ['🏃','Ready, set, go!','各就各位，跑！'],
+   ['🐸','Hop like a frog!','像青蛙一样跳！'],
+   ['🐢','Crawl like a turtle!','像乌龟一样爬！'],
+   ['🤣','What a silly race!','好滑稽的赛跑！'],
+   ['😄','Everyone laughs!','大家都笑了！']]},
+ {t:'The Snowman', zh:'雪人', lvl:'L1', icon:'⛄', desc:'下雪啦，孩子们堆了一个又大又可爱的雪人。', pages:[
+   ['⛄','It snows! White snow.','下雪了！白雪皑皑。'],
+   ['⛄','Roll a big ball.','滚一个大球。'],
+   ['⛄','Roll a small ball.','滚一个小球。'],
+   ['🧣','Hat and scarf on!','戴上帽子和围巾！'],
+   ['😊','A happy snowman!','一个开心的雪人！']]},
+ {t:'Fun at the Beach', zh:'海滩趣事', lvl:'L1', icon:'🏖️', desc:'一家人在海边玩沙、踏浪，度过开心的一天。', pages:[
+   ['🏖️','The beach is sunny.','海滩阳光明媚。'],
+   ['🏰','Build a sandcastle.','堆一座沙堡。'],
+   ['🌊','Splash in the waves!','在浪花里玩耍！'],
+   ['🐚','Find a shell.','找到一个贝壳。'],
+   ['🍦','Ice cream time!','吃冰淇淋啦！']]},
+ {t:'A New Dog', zh:'一只新狗', lvl:'L1', icon:'🐕', desc:'家里可能要来一只新狗狗，孩子们满心期待。', pages:[
+   ['🐕','A new dog comes.','来了一只新狗。'],
+   ['🏠','Can it stay?','它能留下吗？'],
+   ['🤔','The children hope so.','孩子们希望如此。'],
+   ['🐶','Yes! It stays!','可以！它留下啦！'],
+   ['❤️','A new friend.','一个新朋友。']]}
+];
 /* 科普百科（分主题，点卡片整段朗读） */
 var SCIENCE=[
  {t:'🐘 动物奥秘', cls:'', items:[
@@ -521,7 +683,9 @@ var BADGES=[
  {id:'math50',  icon:'🧮', name:'口算高手',   desc:'累计答对50道口算',  cond:function(k){return k.cnt.mathRight>=50;}},
  {id:'rich100', icon:'💰', name:'积分小富翁', desc:'累计获得100积分',   cond:function(k){return k.cnt.earned>=100;}},
  {id:'redeem1', icon:'🎁', name:'心愿达成',   desc:'第一次兑换奖励',    cond:function(k){return k.vouchers.length>=1;}},
- {id:'review10',icon:'🔁', name:'复习小勇士', desc:'完成10次复习',      cond:function(k){return k.cnt.review>=10;}}
+ {id:'review10',icon:'🔁', name:'复习小勇士', desc:'完成10次复习',      cond:function(k){return k.cnt.review>=10;}},
+ {id:'sss10',   icon:'🎵', name:'儿歌小歌手', desc:'会唱10首英文儿歌',  cond:function(k){return k.sssDone.length>=10;}},
+ {id:'ox10',    icon:'📗', name:'牛津小书虫', desc:'读完10本牛津树',    cond:function(k){return k.oxfordDone.length>=10;}}
 ];
 var PRAISE=['太棒了，继续加油！','你真棒！','哇，好厉害呀！','真了不起，为你鼓掌！','好样的，越来越棒啦！'];
 var QUOTES=['每天进步一点点，长大就能了不起！','小小的坚持，大大的收获！','今天也要元气满满哦！','读书使我快乐，运动使我健康！','你比昨天更棒啦！','好习惯是最好的朋友！','勇敢尝试，不怕出错！'];
@@ -559,7 +723,7 @@ var KEY='kidsedu_v2';
 function newKid(name,tag,avatar,age){
   return {
     id:'k'+Date.now()+Math.floor(Math.random()*1000), name:name, tag:tag||'', avatar:avatar||'🐻', age:age||'大班',
-    points:20, ptr:0, learned:[], review:[], habits:{}, poemDone:[], vouchers:[], badges:{},
+    points:20, ptr:0, learned:[], review:[], habits:{}, poemDone:[], sssDone:[], oxfordDone:[], vouchers:[], badges:{},
     goal:{chars:3, words:3, poems:1},
     stats:{day:'', chars:0, words:0, wordSet:[], poems:0, poemSet:[], mathDone:false, charBonus:false, wordBonus:false, allDone:false},
     tv:{limit:30, bank:0, used:{}},
@@ -592,6 +756,7 @@ function load(){
     }
     if(!s.pin) s.pin='8888';
     if(!s.tvRate) s.tvRate={pts:20,min:15};
+    for(var _i=0;_i<s.kids.length;_i++){ var _k=s.kids[_i]; if(!_k.sssDone)_k.sssDone=[]; if(!_k.oxfordDone)_k.oxfordDone=[]; }
     return s;
   }catch(e){ return defState(); }
 }
@@ -658,6 +823,10 @@ function speakStop(){
   _audQ=[];
   if(_aud){ try{ _aud.onended=null; _aud.onerror=null; _aud.pause(); }catch(e){} _aud=null; }
 }
+function stopOnlineAudioOnly(){
+  _audQ=[];
+  if(_aud){ try{ _aud.onended=null; _aud.onerror=null; _aud.pause(); }catch(e){} _aud=null; }
+}
 function splitChunks(text,max){
   var s=String(text),out=[],cur='';
   for(var i=0;i<s.length;i++){
@@ -669,11 +838,13 @@ function splitChunks(text,max){
 }
 function playOnline(text,lang){
   var isZh=(lang||'zh').indexOf('zh')===0;
+  var tl=isZh?'zh-CN':'en', le=isZh?'zh':'en';
   _audQ=splitChunks(text,isZh?120:200).map(function(t){
     var e=encodeURIComponent(t);
     return [
+      'https://dict.youdao.com/dictvoice?audio='+e+'&le='+le,
       'https://fanyi.baidu.com/gettts?lan='+(isZh?'zh':'en')+'&text='+e+'&spd='+(isZh?4:3)+'&source=web',
-      'https://dict.youdao.com/dictvoice?audio='+e+'&le='+(isZh?'zh':'eng')
+      'https://translate.google.com/translate_tts?ie=UTF-8&tl='+tl+'&client=tw-ob&q='+e
     ];
   });
   playNextChunk();
@@ -694,18 +865,16 @@ function playUrl(urls,idx){
   }catch(e){ playUrl(urls,idx+1); }
 }
 function speak(text,lang,rate){
-  speakStop();
-  var engine=S.voiceEngine||'auto';
   var lg=lang||'zh-CN';
-  if(engine==='online'||(engine==='auto'&&_ttsBroken)){ playOnline(text,lg); return; }
-  var v=null;
-  try{ v=pickVoice(lg); }catch(e){}
-  /* 自动模式下：设备完全没有对应语言的语音包（鸿蒙常见）→ 直接走在线语音 */
-  if(engine==='auto' && !v && typeof speechSynthesis!=='undefined'){
-    loadVoices();
-    var hasLang=_voices.some(function(x){ return (x.lang||'').toLowerCase().indexOf(lg.indexOf('zh')===0?'zh':'en')===0; });
-    if(!hasLang && _voices.length===0){ playOnline(text,lg); return; }
-  }
+  var engine=S.voiceEngine||'online';
+  /* 在线引擎 或 已判定系统 TTS 不可用 → 直接走在线（playOnline 在本函数内同步调用，处于用户点击手势中，自动播放策略放行） */
+  if(engine==='online'||(engine==='auto'&&_ttsBroken)){ speakStop(); playOnline(text,lg); return; }
+  var v=null; try{ v=pickVoice(lg); }catch(e){}
+  /* 自动模式：设备没有匹配语种的可用语音包（鸿蒙/部分安卓常见）→ 直接在点击手势内走在线，
+     不要依赖定时器兜底（定时器里 play() 会被移动端自动播放策略拦截而没声音） */
+  if(engine==='auto' && !v){ speakStop(); playOnline(text,lg); return; }
+  /* 系统 TTS 路径：不要预先 cancel（部分机型 cancel 后同帧 speak 会被丢弃），由新句自然打断旧句；仅停掉可能叠加的在线音频 */
+  stopOnlineAudioOnly();
   try{
     var u=new SpeechSynthesisUtterance(text);
     u.lang=lg; u.rate=rate||0.85; u.pitch=1.05;
@@ -713,19 +882,18 @@ function speak(text,lang,rate){
     var started=false;
     u.onstart=function(){ started=true; if(_ttsBroken) markTtsBroken(false); };
     if(engine==='auto'){
-      u.onerror=function(){ if(!started){ markTtsBroken(true); playOnline(text,lg); } };
-      setTimeout(function(){
-        /* 2.5秒还没真正开始发声 → 判定系统TTS失效，改用在线语音并记住（下次直接走在线） */
-        if(!started){ try{ speechSynthesis.cancel(); }catch(e){} markTtsBroken(true); playOnline(text,lg); }
-      },2500);
+      /* 2 秒还没真正开始发声 → 判定系统 TTS 不可用，记住并改用在线（下次点击手势内生效） */
+      setTimeout(function(){ if(!started){ markTtsBroken(true); try{ speechSynthesis.cancel(); }catch(e){} } },2000);
     }
+    window._ttsU=u;  /* 保留引用，防止被浏览器垃圾回收（避免个别机型点击后没声音） */
     speechSynthesis.speak(u);
-  }catch(e){ playOnline(text,lg); }
+  }catch(e){ speakStop(); playOnline(text,lg); }
 }
-var _actx=null;
+var _actx=null,_ttsU=null;
 function chime(kind){
   try{
     if(!_actx) _actx=new (window.AudioContext||window.webkitAudioContext)();
+    if(_actx.state==='suspended'){ try{ _actx.resume(); }catch(e){} }  /* 移动端 AudioContext 初始为 suspended，必须 resume 才出声 */
     var notes=kind==='win'?[523,659,784,1047]:(kind==='no'?[330,262]:[660,880]);
     for(var i=0;i<notes.length;i++){
       (function(f,d){
@@ -1026,12 +1194,15 @@ function vHome(){
     '<div class="wcard" onclick="goStudy(\'science\')"><div class="big">🔬</div><div class="sub">科普百科</div></div>'+
     '<div class="wcard lemonish" onclick="goStudy(\'story\')"><div class="big">📚</div><div class="sub">经典故事</div></div>'+
     '<div class="wcard pinkish" onclick="go(\'tv\')"><div class="big">📺</div><div class="sub">娱乐计时</div></div>'+
+    '<div class="wcard lavish" onclick="goStudy(\'sss\')"><div class="big">🎵</div><div class="sub">英语儿歌</div></div>'+
+    '<div class="wcard greenish" onclick="goStudy(\'oxford\')"><div class="big">📗</div><div class="sub">牛津树</div></div>'+
+    '<div class="wcard lemonish" onclick="goStudy(\'mathgame\')"><div class="big">🎮</div><div class="sub">数学游戏</div></div>'+
   '</div></div>';
   return h;
 }
 
 /* ==================== 学习页 ==================== */
-var STABS=[['hanzi','📖 识字'],['pinyin','🔤 拼音'],['poem','📜 古诗'],['english','🅰️ 英语'],['math','🔢 数学'],['science','🔬 科普'],['story','📚 故事']];
+var STABS=[['hanzi','📖 识字'],['pinyin','🔤 拼音'],['poem','📜 古诗'],['english','🅰️ 英语'],['sss','🎵 儿歌'],['oxford','📗 牛津树'],['math','🔢 数学'],['mathgame','🎮 数游'],['science','🔬 科普'],['story','📚 故事']];
 function vStudy(){
   var h='<div class="subtabs">';
   for(var i=0;i<STABS.length;i++){
@@ -1042,7 +1213,10 @@ function vStudy(){
   else if(studyTab==='pinyin') h+=vPinyin();
   else if(studyTab==='poem') h+=vPoem();
   else if(studyTab==='english') h+=vEnglish();
+  else if(studyTab==='sss') h+=vSSS();
+  else if(studyTab==='oxford') h+=vOxford();
   else if(studyTab==='math') h+=vMath();
+  else if(studyTab==='mathgame') h+=vMathGame();
   else if(studyTab==='science') h+=vScience();
   else if(studyTab==='story') h+=vStory();
   return h;
@@ -1414,6 +1588,143 @@ function answerMath(v){
   save(); checkBadges(k); checkAllDone(k); render();
 }
 
+/* ---- 英语儿歌 SSS ---- */
+function vSSS(){
+  var k=K();
+  var h='<div class="card"><h2>🎵 英语儿歌（SSS）</h2>'+
+    '<p class="hint">点卡片听英文歌名和第一句，跟着唱！会唱了就点亮 ⭐。已会 '+k.sssDone.length+' 首</p><div class="grid mid">';
+  for(var i=0;i<SSS_SONGS.length;i++){
+    var s=SSS_SONGS[i], got=k.sssDone.indexOf(i)>=0;
+    h+='<div class="wcard'+(got?' lemonish':'')+'" onclick="sssPlay('+i+')">'+
+       '<div class="big" style="font-size:32px">'+s.icon+'</div>'+
+       '<div class="sub">'+s.zh+'<br><span style="font-size:11px">'+s.t+'</span></div>'+
+       '<button class="btn xs '+(got?'green':'yellow')+'" style="margin-top:5px" onclick="event.stopPropagation();markSss('+i+')">'+(got?'✅ 会唱':'我会唱')+'</button></div>';
+  }
+  return h+'</div></div>';
+}
+function sssPlay(i){ var s=SSS_SONGS[i]; chime(); speak(s.t+'. '+s.lines[0],'en-US',0.8); }
+function markSss(i){
+  var k=K(); if(k.sssDone.indexOf(i)>=0) return;
+  k.sssDone.push(i); addPts(k,3); save();
+  celebrate('会唱《'+SSS_SONGS[i].zh+'》啦 +3分'); checkBadges(k); render();
+}
+/* ---- 牛津阅读树 ---- */
+function vOxford(){
+  var k=K();
+  var h='<div class="card"><h2>📗 牛津树分级阅读</h2>'+
+    '<p class="hint">点书封面打开绘本一起读，读完点亮 ✅。已读 '+k.oxfordDone.length+' / '+OXFORD.length+' 本</p><div class="grid mid">';
+  for(var i=0;i<OXFORD.length;i++){
+    var b=OXFORD[i], got=k.oxfordDone.indexOf(i)>=0;
+    h+='<div class="wcard'+(got?' lemonish':'')+'" onclick="openOxford('+i+')">'+
+       '<div class="big" style="font-size:26px">'+b.icon+'</div>'+
+       '<div class="sub">'+b.zh+'<br><span style="font-size:11px">'+b.t+'</span><br><span class="hint" style="font-size:10px">'+b.lvl+'</span></div>'+
+       '<button class="btn xs '+(got?'green':'yellow')+'" style="margin-top:5px" onclick="event.stopPropagation();markOx('+i+')">'+(got?'✅ 读过':'我读过')+'</button></div>';
+  }
+  return h+'</div></div>';
+}
+function oxPlay(i){ var b=OXFORD[i]; chime(); speak(b.t+' Level one','en-US',0.8); }
+/* 牛津树绘本阅读器 */
+var OXP={i:0,p:0};
+function openOxford(i){ OXP.i=i; OXP.p=0; openModal(oxReaderHtml(),true); }
+function oxReaderHtml(){
+  var b=OXFORD[OXP.i], pg=b.pages, cur=pg[OXP.p], k=K(), got=k.oxfordDone.indexOf(OXP.i)>=0;
+  var hp=OXP.p>0, hn=OXP.p<pg.length-1;
+  return '<div class="book-cover">'+b.icon+'</div>'+
+    '<div class="book-title">'+b.zh+' <span class="lvl">'+b.t+' · '+b.lvl+'</span></div>'+
+    '<div class="book-page" onclick="oxReadPage()">'+
+      '<div class="scene">'+cur[0]+'</div>'+
+      '<div class="en">'+cur[1]+'</div>'+
+      '<div class="zh">'+cur[2]+'</div>'+
+      '<div class="tap">👆 点画面听这一句英文</div>'+
+    '</div>'+
+    '<div class="book-nav">'+
+      '<button class="btn xs yellow"'+(hp?'':' disabled')+' onclick="oxPage(-1)">◀ 上一页</button>'+
+      '<span class="pg">第 '+(OXP.p+1)+' / '+pg.length+' 页</span>'+
+      '<button class="btn xs yellow"'+(hn?'':' disabled')+' onclick="oxPage(1)">下一页 ▶</button>'+
+    '</div>'+
+    '<button class="btn sm '+(got?'green':'purple')+'" style="margin-top:12px;width:100%" onclick="markOx('+OXP.i+')">'+(got?'✅ 已读过这本':'我读过这本 +3分')+'</button>'+
+    '<button class="btn xs gray" style="margin-top:8px" onclick="oxPlay('+OXP.i+')">🔊 听英文书名</button>';
+}
+function oxPage(d){ OXP.p+=d; document.getElementById('modal').innerHTML=oxReaderHtml(); }
+function oxReadPage(){ var cur=OXFORD[OXP.i].pages[OXP.p]; chime(); speak(cur[1],'en-US',0.85); }
+function markOx(i){
+  var k=K(); if(k.oxfordDone.indexOf(i)>=0) return;
+  k.oxfordDone.push(i); addPts(k,3); save();
+  celebrate('读完《'+OXFORD[i].zh+'》 +3分'); checkBadges(k); render();
+  if(OXP.i===i) document.getElementById('modal').innerHTML=oxReaderHtml();
+}
+/* ---- 游戏化数学 ---- */
+var MG=null;
+function vMathGame(){
+  var h='<div class="card"><h2>🎮 数学小游戏</h2><p class="hint">玩中学，每答对一题 +2 分！</p>'+
+    '<div class="subtabs mt">';
+  var types=[['count','🔢 数一数'],['big','⚖️ 比大小'],['shape','🔷 认形状']];
+  for(var i=0;i<types.length;i++){
+    h+='<button class="'+(MG&&MG.type===types[i][0]?'on':'')+'" onclick="mgStart(\''+types[i][0]+'\')">'+types[i][1]+'</button>';
+  }
+  h+='</div>';
+  if(!MG){ h+='<p class="center mt">选一个游戏开始吧～</p>'; return h+'</div>'; }
+  h+='<p class="center hint">本局得分：'+(MG.score||0)+'</p>';
+  if(MG.type==='count'){
+    h+='<div class="center" style="font-size:18px;font-weight:800;margin:8px 0">数一数，有几个？</div>'+
+       '<div class="center" style="font-size:34px;letter-spacing:4px;margin:10px 0;line-height:1.4">'+(''+MG.q.emo).repeat(MG.q.n)+'</div>'+
+       '<div class="mopts">';
+    for(var c=0;c<MG.q.opts.length;c++) h+='<button onclick="mgAnswer('+MG.q.opts[c]+')">'+MG.q.opts[c]+'</button>';
+    h+='</div>';
+  } else if(MG.type==='big'){
+    h+='<div class="mathq">'+MG.q.a+' ❓ '+MG.q.b+'</div>'+
+       '<p class="center hint">点出更大的那个数</p><div class="mopts">'+
+       '<button onclick="mgAnswer('+MG.q.a+')">'+MG.q.a+'</button>'+
+       '<button onclick="mgAnswer('+MG.q.b+')">'+MG.q.b+'</button></div>';
+  } else if(MG.type==='shape'){
+    h+='<div class="center" style="font-size:18px;font-weight:800;margin:8px 0">找出：'+MG.q.target+'</div>'+
+       '<div class="mopts">';
+    for(var s2=0;s2<MG.q.opts.length;s2++) h+='<button onclick="mgAnswer(\''+MG.q.opts[s2]+'\')">'+MG.q.opts[s2]+'</button>';
+    h+='</div>';
+  }
+  h+='<div class="center mt"><button class="btn xs gray" onclick="mgStart(\''+MG.type+'\')">🔄 换一题</button></div>';
+  return h+'</div>';
+}
+function mgStart(type){ MG={type:type, score:0, q:null}; mgGen(); render(); }
+function mgGen(){
+  if(MG.type==='count'){
+    var n=1+Math.floor(Math.random()*10);
+    var emos=['🐱','⭐','🍎','🌟','🐶','🐰','🌸','🚗','🍓','🐥'];
+    var em=emos[Math.floor(Math.random()*emos.length)];
+    var opts=[n];
+    while(opts.length<3){ var d=n+(Math.floor(Math.random()*5)-2); if(d>=1&&d<=12&&opts.indexOf(d)<0) opts.push(d); }
+    opts.sort(function(){return Math.random()-0.5;});
+    MG.q={n:n, emo:em, opts:opts};
+  } else if(MG.type==='big'){
+    var a=1+Math.floor(Math.random()*20), b=1+Math.floor(Math.random()*20);
+    while(b===a) b=1+Math.floor(Math.random()*20);
+    MG.q={a:a,b:b};
+  } else if(MG.type==='shape'){
+    var shapes=[['⭕','圆形'],['🔶','方形'],['🔺','三角形'],['⭐','星形'],['💖','心形']];
+    var pick=shapes[Math.floor(Math.random()*shapes.length)];
+    var others=shapes.filter(function(x){return x[0]!==pick[0];});
+    var opt3=[pick[0]];
+    while(opt3.length<3){ var o=others[Math.floor(Math.random()*others.length)][0]; if(opt3.indexOf(o)<0) opt3.push(o); }
+    opt3.sort(function(){return Math.random()-0.5;});
+    MG.q={target:pick[1], opts:opt3};
+  }
+}
+function mgAnswer(v){
+  var k=K(), ok=false, ans='';
+  if(MG.type==='count'){ ok=(v===MG.q.n); ans=String(MG.q.n); }
+  else if(MG.type==='big'){ ok=(v===Math.max(MG.q.a,MG.q.b)); ans=String(Math.max(MG.q.a,MG.q.b)); }
+  else if(MG.type==='shape'){
+    var smap={'⭕':'圆形','🔶':'方形','🔺':'三角形','⭐':'星形','💖':'心形'};
+    ok=(smap[v]===MG.q.target); ans=MG.q.target;
+  }
+  if(ok){
+    MG.score++; k.cnt.mathRight++; addPts(k,2); confetti(); chime('win'); speak('答对啦！');
+  } else {
+    chime('no'); speak('再看看，正确答案是'+ans); toast('正确答案是 '+ans);
+  }
+  mgGen(); save(); checkBadges(k); render();
+}
+
 /* ==================== 习惯打卡页 ==================== */
 function vHabit(){
   var k=K();
@@ -1649,7 +1960,13 @@ function pvBackup(){
     '<button class="btn sm purple" onclick="document.getElementById(\'impFile\').click()">⬆️ 导入备份</button>'+
     '<input id="impFile" type="file" accept="application/json" style="display:none" onchange="importData(this)">'+
     '</div>'+
-    '<p class="hint mt">⚠️ 导出的文件包含全部学习进度，请妥善保存，不要随意转发他人。</p></div>';
+    '<hr style="border:none;border-top:1px dashed #E0D4F0;margin:16px 0">'+
+    '<p class="hint">不想传文件？也可以在手机/电脑间用「同步码」迁移：在旧设备复制下方同步码，用微信发给新设备，再粘贴导入即可。</p>'+
+    '<div class="flex mt">'+
+    '<button class="btn sm" onclick="copySync()">📋 复制同步码</button>'+
+    '<button class="btn sm purple" onclick="pasteSync()">📥 粘贴导入</button></div>'+
+    '<textarea id="syncBox" placeholder="把另一台设备复制的同步码粘贴到这里，再点“粘贴导入”" style="margin-top:8px;min-height:56px;font-size:13px;line-height:1.5"></textarea>'+
+    '<p class="hint mt">⚠️ 同步码包含全部学习进度，请妥善保存，不要随意转发他人。</p></div>';
   return h;
 }
 function exportData(){
@@ -1677,6 +1994,31 @@ function importData(el){
     el.value='';
   };
   r.readAsText(f);
+}
+function copySync(){
+  var txt=localStorage.getItem(KEY)||'';
+  if(!txt){ toast('没有可同步的数据'); return; }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){ toast('同步码已复制，去微信粘贴吧'); },
+      function(){ fallbackCopy(txt); });
+  } else { fallbackCopy(txt); }
+}
+function fallbackCopy(txt){
+  var ta=document.getElementById('syncBox');
+  if(!ta){ ta=document.createElement('textarea'); document.body.appendChild(ta); }
+  ta.style.display='block'; ta.value=txt; ta.focus(); ta.select();
+  try{ document.execCommand('copy'); toast('同步码已复制'); }
+  catch(e){ toast('请手动复制下方同步码'); }
+}
+function pasteSync(){
+  var ta=document.getElementById('syncBox');
+  if(!ta || !ta.value.trim()){ toast('请先粘贴同步码'); return; }
+  if(!confirm('导入会覆盖当前设备全部数据，确定继续？建议先复制当前同步码备份。')) return;
+  try{
+    var data=JSON.parse(ta.value.trim());
+    for(var key in data){ if(data.hasOwnProperty(key)) localStorage.setItem(key, data[key]); }
+    toast('导入成功，正在重启…'); setTimeout(function(){ location.reload(); }, 800);
+  }catch(e){ toast('同步码格式不对'); }
 }
 function pvKids(){
   var h='<div class="card"><h2>👨‍👧 小孩账号管理</h2><p class="hint">每个孩子的计划、字库、积分、时长、勋章完全独立、互不影响。</p><div class="mt"></div>';
@@ -1730,7 +2072,7 @@ function pvStudy(){
     for(var vi=0;vi<list.length;vi++){ o+='<option value="'+esc(list[vi].name)+'"'+(sel===list[vi].name?' selected':'')+'>'+esc(list[vi].name)+'</option>'; }
     return o;
   }
-  var eng=S.voiceEngine||'auto';
+  var eng=S.voiceEngine||'online';
   h+='<div class="card"><h2>🔊 朗读音色（全局）</h2>'+
     '<p class="hint">自动优选会挑选设备上最接近播音员的音色。想要最好的普通话播音音质，推荐用 <b>Edge 浏览器</b> 打开（内置“晓晓/云健”等 Natural 在线音色）；iPhone 可在 设置→辅助功能→朗读内容 里下载“婷婷(高品质)”。</p>'+
     '<div class="prow"><label>引擎</label><select id="voiceEngSel" style="flex:1;min-width:180px">'+

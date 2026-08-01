@@ -1,4 +1,4 @@
-const CACHE = 'kidsedu-v6';
+const CACHE = 'kidsedu-v7';
 const ASSETS = ['./', './index.html', './habit.html', './data-science.js', './data-stories.js', './icon-192.png', './icon-512.png', './manifest.webmanifest'];
 
 self.addEventListener('install', e => {
